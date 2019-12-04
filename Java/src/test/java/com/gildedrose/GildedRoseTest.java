@@ -28,7 +28,13 @@ class GildedRoseTest {
                 new Item("Backstage passes to a TAFKAL80ETC concert", -4, 40),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 0, 10),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 0, 0),
-                new Item("Backstage passes to a TAFKAL80ETC concert", -5, 0)};
+                new Item("Backstage passes to a TAFKAL80ETC concert", -5, 0),
+                new Item("Aged Brie", 10, 15),
+                new Item("Aged Brie", 10, 0),
+                new Item("Aged Brie", 0, 15),
+                new Item("Aged Brie", 0, 0),
+                new Item("Aged Brie", -5, 0),
+                new Item("Aged Brie", -5, 10)};
         app = new GildedRose(items);
         app.updateQuality();
     }
@@ -115,17 +121,31 @@ class GildedRoseTest {
 
     @Test
     void testAgedBriePosSellInPosQuality() {
-        assertEquals(31, app.items[16].quality);
+        assertEquals(16, app.items[16].quality);
     }
 
     @Test
     void testAgedBriePosSellInZeroQuality(){
-        assertEquals(1, app.items[1].quality);
+        assertEquals(1, app.items[17].quality);
     }
 
-    /*@Test
-    void testQualityIncreaseBrieAfterSellIn() {
-        assertEquals(41, app.items[8].quality);
-    }*/
+    @Test
+    void testAgedBrieZeroSellInPosQuality(){
+        assertEquals(16, app.items[18].quality);
+    }
 
+    @Test
+    void testAgedBrieZeroSellInZeroQuality(){
+        assertEquals(1, app.items[19].quality);
+    }
+
+    @Test
+    void testAgedBrieNegSellInZeroQuality(){
+        assertEquals(1, app.items[20].quality);
+    }
+
+    @Test
+    void testAgedBrieNegSellInPosQuality(){
+        assertEquals(11, app.items[21].quality);
+    }
 }
