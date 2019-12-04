@@ -131,21 +131,21 @@ class GildedRoseTest {
 
     @Test
     void testAgedBrieZeroSellInPosQuality(){
-        assertEquals(16, app.items[18].quality);
+        assertEquals(17, app.items[18].quality);
     }
 
     @Test
     void testAgedBrieZeroSellInZeroQuality(){
-        assertEquals(1, app.items[19].quality);
+        assertEquals(2, app.items[19].quality);
     }
 
     @Test
     void testAgedBrieNegSellInZeroQuality(){
-        assertEquals(1, app.items[20].quality);
+        assertEquals(2, app.items[20].quality);
     }
 
     @Test
     void testAgedBrieNegSellInPosQuality(){
-        assertEquals(11, app.items[21].quality);
+        assertEquals(12, app.items[21].quality);
     }
 }
