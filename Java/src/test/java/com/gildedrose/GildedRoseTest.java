@@ -19,14 +19,16 @@ class GildedRoseTest {
                 new Item("NormalItemNegSellInPozQuality", -1, 40),
                 new Item("NormalItemZeroSellInPozQuality",0, 20 ),
                 new Item("NormalItemZeroSellInZeroQuality", 0, 0),
-                new Item("Aged Brie", 10, 30),
                 new Item("Sulfuras, Hand of Ragnaros", 0, 80),
                 new Item("Sulfuras, Hand of Ragnaros", -1, 80),
                 new Item("Sulfuras, Hand of Ragnaros", 1, 80),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 20, 10),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 10, 10),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10),
-                new Item("Backstage passes to a TAFKAL80ETC concert", -4, 40)};
+                new Item("Backstage passes to a TAFKAL80ETC concert", -4, 40),
+                new Item("Backstage passes to a TAFKAL80ETC concert", 0, 10),
+                new Item("Backstage passes to a TAFKAL80ETC concert", 0, 0),
+                new Item("Backstage passes to a TAFKAL80ETC concert", -5, 0)};
         app = new GildedRose(items);
         app.updateQuality();
     }
@@ -62,43 +64,63 @@ class GildedRoseTest {
     }
 
     @Test
-    void testAgedBrie() {
-        assertEquals(31, app.items[6].quality);
-    }
-
-    @Test
     void testSulfurasSellInZero(){
-        assertEquals(80, app.items[7].quality);
+        assertEquals(80, app.items[6].quality);
     }
 
     @Test
     void testSulfurasNegSellIn(){
-        assertEquals(80, app.items[8].quality);
+        assertEquals(80, app.items[7].quality);
     }
 
     @Test
     void testSulfurasPozSellIn() {
-        assertEquals(80, app.items[9].quality);
+        assertEquals(80, app.items[8].quality);
     }
 
     @Test
     void testBackstagePassGreaterThanTenDays() {
-        assertEquals(11, app.items[10].quality);
+        assertEquals(11, app.items[9].quality);
     }
 
     @Test
     void testBackstagePassTenDaysOrLower() {
-        assertEquals(12, app.items[11].quality);
+        assertEquals(12, app.items[10].quality);
     }
 
     @Test
     void testBackstagePassFiveDaysOrLower() {
-        assertEquals(13, app.items[12].quality);
+        assertEquals(13, app.items[11].quality);
     }
 
     @Test
     void testBackstagePassAfterSellIn() {
-        assertEquals(0,app.items[13].quality);
+        assertEquals(0,app.items[12].quality);
+    }
+
+    @Test
+    void testBackstagePassOnSellIn(){
+        assertEquals(0, app.items[13].quality);
+    }
+
+    @Test
+    void testBackStagePassZeroSellInZeroQuality(){
+        assertEquals(0, app.items[14].quality);
+    }
+
+    @Test
+    void testBackStagePassNegSellInZeroQuality(){
+        assertEquals(0, app.items[15].quality);
+    }
+
+    @Test
+    void testAgedBriePosSellInPosQuality() {
+        assertEquals(31, app.items[16].quality);
+    }
+
+    @Test
+    void testAgedBriePosSellInZeroQuality(){
+        assertEquals(1, app.items[1].quality);
     }
 
     /*@Test
