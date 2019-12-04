@@ -18,7 +18,9 @@ class GildedRoseTest {
                 new Item("Sulfuras, Hand of Ragnaros", 0,80),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 20, 10),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 10, 10),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10)};
+                new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10),
+                new Item("Backstage passes to a TAFKAL80ETC concert", -4, 40),
+                new Item("NormalItemPassedSellIn", -1, 40)};
         app = new GildedRose(items);
     }
 
@@ -62,6 +64,18 @@ class GildedRoseTest {
         app.updateQuality();
         assertEquals(4, app.items[5].sellIn);
         assertEquals(13, app.items[5].quality);
+    }
+
+    @Test
+    void testBackstagePassAfterSellIn() {
+        app.updateQuality();
+        assertEquals(0,app.items[6].quality);
+    }
+
+    @Test
+    void testQualityDegradeAfterSellIn() {
+        app.updateQuality();
+        assertEquals(38, app.items[7].quality);
     }
 
 }
