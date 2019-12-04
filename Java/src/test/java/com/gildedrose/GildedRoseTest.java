@@ -20,49 +20,44 @@ class GildedRoseTest {
                 new Item("Backstage passes to a TAFKAL80ETC concert", 10, 10),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10),
                 new Item("Backstage passes to a TAFKAL80ETC concert", -4, 40),
-                new Item("NormalItemPassedSellIn", -1, 40)};
+                new Item("NormalItemPassedSellIn", -1, 40),
+                new Item("Aged Brie", -1, 40)};
         app = new GildedRose(items);
     }
 
     @Test
     void testNormalItem() {
         app.updateQuality();
-        assertEquals(4,app.items[0].sellIn);
         assertEquals(49, app.items[0].quality);
     }
 
     @Test
     void testAgedBrie() {
         app.updateQuality();
-        assertEquals(9, app.items[1].sellIn);
         assertEquals(31, app.items[1].quality);
     }
 
     @Test
     void testSulfuras() {
         app.updateQuality();
-        assertEquals(0, app.items[2].sellIn);
         assertEquals(80, app.items[2].quality);
     }
 
     @Test
     void testBackstagePassGreaterThanTenDays() {
         app.updateQuality();
-        assertEquals(19, app.items[3].sellIn);
         assertEquals(11, app.items[3].quality);
     }
 
     @Test
     void testBackstagePassTenDaysOrLower() {
         app.updateQuality();;
-        assertEquals(9, app.items[4].sellIn);
         assertEquals(12, app.items[4].quality);
     }
 
     @Test
     void testBackstagePassFiveDaysOrLower() {
         app.updateQuality();
-        assertEquals(4, app.items[5].sellIn);
         assertEquals(13, app.items[5].quality);
     }
 
@@ -76,6 +71,12 @@ class GildedRoseTest {
     void testQualityDegradeAfterSellIn() {
         app.updateQuality();
         assertEquals(38, app.items[7].quality);
+    }
+
+    @Test
+    void testQualityIncreaseBrieAfterSellIn() {
+        app.updateQuality();
+        assertEquals(41, app.items[8].quality);
     }
 
 }
