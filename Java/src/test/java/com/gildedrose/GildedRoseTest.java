@@ -34,7 +34,11 @@ class GildedRoseTest {
                 new Item("Aged Brie", 0, 15),
                 new Item("Aged Brie", 0, 0),
                 new Item("Aged Brie", -5, 0),
-                new Item("Aged Brie", -5, 10)};
+                new Item("Aged Brie", -5, 10),
+                new Item("Aged Brie", 10, 50),
+                new Item("Backstage passes to a TAFKAL80ETC concert", 20, 50),
+                new Item("Backstage passes to a TAFKAL80ETC concert", 10, 50),
+                new Item("Backstage passes to a TAFKAL80ETC concert", 5, 50)};
         app = new GildedRose(items);
         app.updateQuality();
     }
@@ -158,6 +162,26 @@ class GildedRoseTest {
     @Test
     void testAgedBrieNegSellInPosQuality(){
         assertEquals(12, app.items[21].quality);
+    }
+
+    @Test
+    void testAgedBrieMaxQuality(){
+        assertEquals(50, app.items[22].quality);
+    }
+
+    @Test
+    void testBackStagePassMaxQualityOverTenDays(){
+        assertEquals(50, app.items[23].quality);
+    }
+
+    @Test
+    void testBackStagePassMaxQualityOverFiveDays(){
+        assertEquals(50, app.items[24].quality);
+    }
+
+    @Test
+    void testBackStagePassMaxQualityOverZeroDays(){
+        assertEquals(50, app.items[25].quality);
     }
 
     @Test
