@@ -17,22 +17,20 @@ class GildedRose {
         switch (item.name){
             case ("Aged Brie"):
                 increaseAgedBrieQuality(item);
-                advanceSellIn(item);
                 break;
             case("Backstage passes to a TAFKAL80ETC concert"):
                 increaseBackstagePassQuality(item);
-                advanceSellIn(item);
                 break;
             case("Conjured Item"):
                 decreaseConjuredItemQuality(item);
-                advanceSellIn(item);
                 break;
             case("Sulfuras, Hand of Ragnaros"):
                 break;
             default:
                 decreaseNormalItemQuality(item);
-                advanceSellIn(item);
+
         }
+        advanceSellIn(item);
     }
 
     public void decreaseNormalItemQuality(Item item){
@@ -86,6 +84,13 @@ class GildedRose {
     }
 
     public void advanceSellIn(Item item){
+        if(!isSulfuras(item)) {
             item.sellIn -= 1;
+        }
     }
+
+    public boolean isSulfuras(Item item){
+        return item.name.equals("Sulfuras, Hand of Ragnaros");
+    }
+
 }
