@@ -17,16 +17,22 @@ class GildedRose {
         switch (item.name){
             case ("Aged Brie"):
                 increaseAgedBrieQuality(item);
+                advanceSellIn(item);
+                break;
             case("Backstage passes to a TAFKAL80ETC concert"):
                 increaseBackstagePassQuality(item);
+                advanceSellIn(item);
+                break;
             case("Conjured Item"):
                 decreaseConjuredItemQuality(item);
+                advanceSellIn(item);
+                break;
             case("Sulfuras, Hand of Ragnaros"):
                 break;
             default:
                 decreaseNormalItemQuality(item);
+                advanceSellIn(item);
         }
-        advanceSellIn(item);
     }
 
     public void decreaseNormalItemQuality(Item item){
@@ -41,7 +47,7 @@ class GildedRose {
     }
 
     public void decreaseConjuredItemQuality(Item item){
-        if(item.quality > 0 && isConjuredItem(item)){
+        if(item.quality > 0){
             if(item.sellIn > 0) {
                 item.quality = item.quality - 2;
             }
@@ -52,7 +58,7 @@ class GildedRose {
     }
 
     public void increaseAgedBrieQuality(Item item){
-        if(isAgedBrie(item) && item.quality < 50) {
+        if(item.quality < 50) {
             if(item.sellIn <= 0){
                 item.quality = item.quality + 2;
             }
@@ -63,7 +69,7 @@ class GildedRose {
     }
 
     public void increaseBackstagePassQuality(Item item){
-        if(isBackstagePass(item) && item.quality < 50) {
+        if(item.quality < 50) {
             if(item.sellIn > 10 ) {
                 item.quality = item.quality + 1;
             }
@@ -80,24 +86,6 @@ class GildedRose {
     }
 
     public void advanceSellIn(Item item){
-        if(!isSulfuras(item)){
             item.sellIn -= 1;
-        }
-    }
-
-    public boolean isAgedBrie(Item item){
-        return item.name.equals("Aged Brie");
-    }
-
-    public boolean isSulfuras(Item item){
-        return item.name.equals("Sulfuras, Hand of Ragnaros");
-    }
-
-    public boolean isBackstagePass(Item item){
-        return item.name.equals("Backstage passes to a TAFKAL80ETC concert");
-    }
-
-    public boolean isConjuredItem(Item item){
-        return item.name.equals("Conjured Item");
     }
 }
