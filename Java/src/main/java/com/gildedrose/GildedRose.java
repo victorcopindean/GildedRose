@@ -9,27 +9,34 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            computeNewQualityAndSellIn(item);
+            computeNewItemValueAndSellIn(item);
         }
     }
 
-    public void computeNewQualityAndSellIn(Item item){
-        decreaseQuality(item);
-        increaseQuality(item);
+    public void computeNewItemValueAndSellIn(Item item){
+        switch (item.name){
+            case ("Aged Brie"):
+                increaseAgedBrieQuality(item);
+            case("Backstage passes to a TAFKAL80ETC concert"):
+                increaseBackstagePassQuality(item);
+            case("Conjured Item"):
+                decreaseConjuredItemQuality(item);
+            case("Sulfuras, Hand of Ragnaros"):
+                break;
+            default:
+                decreaseNormalItemQuality(item);
+        }
         advanceSellIn(item);
     }
 
-    public void decreaseQuality(Item item){
-        decreaseNormalItemQuality(item);
-        decreaseConjuredItemQuality(item);
-    }
-
     public void decreaseNormalItemQuality(Item item){
-        if(item.quality > 0 && isNormalItem(item)) {
+        if(item.quality > 0) {
             if(item.sellIn > 0) {
                 item.quality = item.quality - 1;
             }
-            else item.quality = item.quality - 2;
+            else {
+                item.quality = item.quality - 2;
+            }
         }
     }
 
@@ -38,13 +45,10 @@ class GildedRose {
             if(item.sellIn > 0) {
                 item.quality = item.quality - 2;
             }
-            else item.quality = item.quality - 4;
+            else {
+                item.quality = item.quality - 4;
+            }
         }
-    }
-
-    public void increaseQuality(Item item){
-       increaseAgedBrieQuality(item);
-       increaseBackstagePassQuality(item);
     }
 
     public void increaseAgedBrieQuality(Item item){
@@ -92,9 +96,4 @@ class GildedRose {
     public boolean isConjuredItem(Item item){
         return item.name.equals("Conjured Item");
     }
-
-    public boolean isNormalItem(Item item){
-        return !isSulfuras(item) && !isAgedBrie(item) && !isBackstagePass(item) && !isConjuredItem(item);
-    }
-
 }
