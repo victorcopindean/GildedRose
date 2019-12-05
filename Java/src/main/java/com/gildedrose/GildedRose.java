@@ -14,35 +14,12 @@ class GildedRose {
     }
 
     public void computeNewQualityAndSellIn(Item item){
-        normalItemQualityDecay(item);
-        agedBrieQualityIncrease(item);
-        backstagePassQualityIncrease(item);
+        decreaseQuality(item);
+        increaseQuality(item);
         advanceSellIn(item);
     }
 
-    public boolean isAgedBrie(Item item){
-        return item.name.equals("Aged Brie");
-    }
-
-    public boolean isSulfuras(Item item){
-        return item.name.equals("Sulfuras, Hand of Ragnaros");
-    }
-
-    public boolean isBackstagePass(Item item){
-        return item.name.equals("Backstage passes to a TAFKAL80ETC concert");
-    }
-
-    public boolean isNormalItem(Item item){
-        return !isSulfuras(item) && !isAgedBrie(item) && !isBackstagePass(item);
-    }
-
-    public void increaseQuality(Item item){
-        if (item.quality < 50) {
-            item.quality = item.quality + 1;
-        }
-    }
-
-    public void normalItemQualityDecay(Item item){
+    public void decreaseQuality(Item item){
         if(item.quality > 0 && isNormalItem(item)) {
             if(item.sellIn > 0) {
                 item.quality = item.quality - 1;
@@ -51,17 +28,21 @@ class GildedRose {
         }
     }
 
-    public void agedBrieQualityIncrease(Item item){
-        if(isAgedBrie(item)) {
-            increaseQuality(item);
-        }
-        if(isAgedBrie(item) && item.sellIn <= 0){
-            increaseQuality(item);
+    public void increaseQuality(Item item){
+       increaseAgedBrieQuality(item);
+       increaseBackstagePassQuality(item);
+    }
+
+    public void increaseAgedBrieQuality(Item item){
+        if(isAgedBrie(item) && item.quality < 50) {
+            if(item.sellIn <= 0){
+                item.quality = item.quality + 2;
+            }
+            else item.quality = item.quality + 1;
         }
     }
 
-    public void backstagePassQualityIncrease(Item item){
-
+    public void increaseBackstagePassQuality(Item item){
         if(isBackstagePass(item) && item.quality < 50) {
             if(item.sellIn > 10 ) {
                 item.quality = item.quality + 1;
@@ -81,4 +62,21 @@ class GildedRose {
             item.sellIn -= 1;
         }
     }
+
+    public boolean isAgedBrie(Item item){
+        return item.name.equals("Aged Brie");
+    }
+
+    public boolean isSulfuras(Item item){
+        return item.name.equals("Sulfuras, Hand of Ragnaros");
+    }
+
+    public boolean isBackstagePass(Item item){
+        return item.name.equals("Backstage passes to a TAFKAL80ETC concert");
+    }
+
+    public boolean isNormalItem(Item item){
+        return !isSulfuras(item) && !isAgedBrie(item) && !isBackstagePass(item);
+    }
+
 }
