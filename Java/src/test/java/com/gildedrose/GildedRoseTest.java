@@ -38,7 +38,13 @@ class GildedRoseTest {
                 new Item("Aged Brie", 10, 50),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 20, 50),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 10, 50),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 5, 50)};
+                new Item("Backstage passes to a TAFKAL80ETC concert", 5, 50),
+                new Item("Conjured Item", 10, 50),
+                new Item("Conjured Item", 0, 30),
+                new Item("Conjured Item", -5, 10),
+                new Item("Conjured Item", 10, 0),
+                new Item("Conjured Item", 0, 0),
+                new Item("Conjured item", -5, 0)};
         app = new GildedRose(items);
         app.updateQuality();
     }
@@ -182,6 +188,36 @@ class GildedRoseTest {
     @Test
     void testBackStagePassMaxQualityOverZeroDays(){
         assertEquals(50, app.items[25].quality);
+    }
+
+    @Test
+    void testConjuredItemPosSellInPosQuality(){
+        assertEquals(48, app.items[26].quality);
+    }
+
+    @Test
+    void testConjuredItemZeroSellInPosQuality(){
+        assertEquals(26, app.items[27].quality);
+    }
+
+    @Test
+    void testConjuredItemNegSellInPosQuality(){
+        assertEquals(6, app.items[28].quality);
+    }
+
+    @Test
+    void testConjuredItemsPozSellInZeroQuality(){
+        assertEquals(0, app.items[29].quality);
+    }
+
+    @Test
+    void testConjuredItemsZeroSellInZeroQuality(){
+        assertEquals(0, app.items[30].quality);
+    }
+
+    @Test
+    void testConjuredItemsNegSellInZeroQuality(){
+        assertEquals(0, app.items[31].quality);
     }
 
     @Test
