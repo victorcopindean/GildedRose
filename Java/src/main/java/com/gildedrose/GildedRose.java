@@ -26,6 +26,12 @@ class GildedRose {
             }
             else item.quality = item.quality - 2;
         }
+        if(item.quality > 0 && isConjuredItem(item)){
+            if(item.sellIn > 0) {
+                item.quality = item.quality - 2;
+            }
+            else item.quality = item.quality - 4;
+        }
     }
 
     public void increaseQuality(Item item){
@@ -75,8 +81,12 @@ class GildedRose {
         return item.name.equals("Backstage passes to a TAFKAL80ETC concert");
     }
 
+    public boolean isConjuredItem(Item item){
+        return item.name.equals("Conjured Item");
+    }
+
     public boolean isNormalItem(Item item){
-        return !isSulfuras(item) && !isAgedBrie(item) && !isBackstagePass(item);
+        return !isSulfuras(item) && !isAgedBrie(item) && !isBackstagePass(item) && !isConjuredItem(item);
     }
 
 }
