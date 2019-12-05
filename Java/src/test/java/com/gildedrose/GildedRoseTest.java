@@ -41,56 +41,67 @@ class GildedRoseTest {
 
     @Test
     void testNormalItem() {
+
         assertEquals(49, app.items[0].quality);
     }
 
     @Test
     void testNormalItemPozSellInZeroQuality() {
+
         assertEquals(0, app.items[1].quality);
     }
 
     @Test
     void testNormalItemNegativeSellInZeroQuality(){
+
         assertEquals(0, app.items[2].quality);
     }
 
     @Test
     void testNormalItemNegativeSellInPozQuality(){
+
         assertEquals(38, app.items[3].quality);
     }
 
     @Test
     void testNormalItemZeroSellInPozQuality(){
+
         assertEquals(18, app.items[4].quality);
     }
 
     @Test
     void testNormalItemZeroSellInZeroQuality() {
+
         assertEquals(0, app.items[5].quality);
     }
 
     @Test
     void testSulfurasSellInZero(){
+
         assertEquals(80, app.items[6].quality);
     }
 
     @Test
     void testSulfurasNegSellIn(){
+
         assertEquals(80, app.items[7].quality);
     }
 
     @Test
     void testSulfurasPozSellIn() {
+
         assertEquals(80, app.items[8].quality);
     }
 
     @Test
     void testBackstagePassGreaterThanTenDays() {
+
         assertEquals(11, app.items[9].quality);
     }
 
     @Test
     void testBackstagePassTenDaysOrLower() {
+
         assertEquals(12, app.items[10].quality);
     }
 
@@ -147,5 +158,31 @@ class GildedRoseTest {
     @Test
     void testAgedBrieNegSellInPosQuality(){
         assertEquals(12, app.items[21].quality);
+    }
+
+    @Test
+    void testEndDay(){
+        assertEquals(4, app.items[0].sellIn);
+        assertEquals(3, app.items[1].sellIn);
+        assertEquals(-2, app.items[3].sellIn);
+        assertEquals(-1, app.items[4].sellIn);
+        assertEquals(-1, app.items[5].sellIn);
+        assertEquals(0, app.items[6].sellIn);
+        assertEquals(-1, app.items[7].sellIn);
+        assertEquals(1, app.items[8].sellIn);
+        assertEquals(19, app.items[9].sellIn);
+        assertEquals(9, app.items[10].sellIn);
+        assertEquals(4, app.items[11].sellIn);
+        assertEquals(-5, app.items[12].sellIn);
+        assertEquals(-1, app.items[13].sellIn);
+        assertEquals(-1, app.items[14].sellIn);
+        assertEquals(-6, app.items[15].sellIn);
+        assertEquals(9, app.items[16].sellIn);
+        assertEquals(9, app.items[17].sellIn);
+        assertEquals(-1, app.items[18].sellIn);
+        assertEquals(-1, app.items[19].sellIn);
+        assertEquals(-6, app.items[20].sellIn);
+        assertEquals(-6, app.items[21].sellIn);
+
     }
 }
