@@ -18,21 +18,6 @@ class GildedRose {
         agedBrieQualityIncrease(item);
         backstagePassQualityIncrease(item);
         endDay(item);
-        if (item.sellIn < 0) {
-            if (!isAgedBrie(item)) {
-                if (!isBackstagePass(item)) {
-                    if (item.quality > 0) {
-                        if (!isSulfuras(item)) {
-                            item.quality = item.quality - 1;
-                        }
-                    }
-                } else {
-                    item.quality = 0;
-                }
-            } else {
-                increaseQuality(item);
-            }
-        }
     }
 
     public boolean isAgedBrie(Item item){
@@ -59,7 +44,10 @@ class GildedRose {
 
     public void normalItemQualityDecay(Item item){
         if(item.quality > 0 && isNormalItem(item)) {
-            item.quality -= 1;
+            if(item.sellIn > 0) {
+                item.quality = item.quality - 1;
+            }
+            else item.quality = item.quality - 2;
         }
     }
 
@@ -67,9 +55,13 @@ class GildedRose {
         if(isAgedBrie(item)) {
             increaseQuality(item);
         }
+        if(isAgedBrie(item) && item.sellIn <= 0){
+            increaseQuality(item);
+        }
     }
 
     public void backstagePassQualityIncrease(Item item){
+
         if(isBackstagePass(item)) {
             if(item.sellIn > 10 ) {
                 item.quality = item.quality + 1;
