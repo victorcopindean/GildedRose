@@ -20,12 +20,20 @@ class GildedRose {
     }
 
     public void decreaseQuality(Item item){
+        decreaseNormalItemQuality(item);
+        decreaseConjuredItemQuality(item);
+    }
+
+    public void decreaseNormalItemQuality(Item item){
         if(item.quality > 0 && isNormalItem(item)) {
             if(item.sellIn > 0) {
                 item.quality = item.quality - 1;
             }
             else item.quality = item.quality - 2;
         }
+    }
+
+    public void decreaseConjuredItemQuality(Item item){
         if(item.quality > 0 && isConjuredItem(item)){
             if(item.sellIn > 0) {
                 item.quality = item.quality - 2;
