@@ -1,6 +1,5 @@
 package com.gildedrose;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,239 +9,178 @@ class GildedRoseTest {
     Item[] items;
     GildedRose app;
 
-    @BeforeEach
-    void setUp() {
-        items = new Item[]{
-                new Item("NormalItem", 5, 50),
-                new Item("NormalItemPozSellInZeroQuality", 4, 0),
-                new Item("NormalItemNegSellInZeroQuality", -1, 0),
-                new Item("NormalItemNegSellInPozQuality", -1, 40),
-                new Item("NormalItemZeroSellInPozQuality",0, 20 ),
-                new Item("NormalItemZeroSellInZeroQuality", 0, 0),
-                new Item("Sulfuras, Hand of Ragnaros", 0, 80),
-                new Item("Sulfuras, Hand of Ragnaros", -1, 80),
-                new Item("Sulfuras, Hand of Ragnaros", 1, 80),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 20, 10),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 10, 10),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10),
-                new Item("Backstage passes to a TAFKAL80ETC concert", -4, 40),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 0, 10),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 0, 0),
-                new Item("Backstage passes to a TAFKAL80ETC concert", -5, 0),
-                new Item("Aged Brie", 10, 15),
-                new Item("Aged Brie", 10, 0),
-                new Item("Aged Brie", 0, 15),
-                new Item("Aged Brie", 0, 0),
-                new Item("Aged Brie", -5, 0),
-                new Item("Aged Brie", -5, 10),
-                new Item("Aged Brie", 10, 50),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 20, 50),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 10, 50),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 5, 50),
-                new Item("Conjured Item", 10, 50),
-                new Item("Conjured Item", 0, 30),
-                new Item("Conjured Item", -5, 10),
-                new Item("Conjured Item", 10, 0),
-                new Item("Conjured Item", 0, 0),
-                new Item("Conjured item", -5, 0)};
-        app = new GildedRose(items);
+    @Test
+    void test_NormalItem_QualityDecrease_PozSellIn_PozQuality() {
+        createItemWithSellInAndQuality("Normal Item", 10, 20);
         app.updateQuality();
+        assertEquals(19, app.items[0].quality);
     }
 
     @Test
-    void testNormalItem() {
-
-        assertEquals(49, app.items[0].quality);
+    void test_NormalItem_QualityDecrease_NegSellIn_PozQuality(){
+        createItemWithSellInAndQuality("Normal Item", -7, 30);
+        app.updateQuality();
+        assertEquals(28, app.items[0].quality);
     }
 
     @Test
-    void testNormalItemPozSellInZeroQuality() {
-
-        assertEquals(0, app.items[1].quality);
+    void test_NormalItem_QualityDecrease_ZeroSellIn_PozQuality(){
+        createItemWithSellInAndQuality("Normal Item", 0, 30);
+        app.updateQuality();
+        assertEquals(28, app.items[0].quality);
     }
 
     @Test
-    void testNormalItemNegativeSellInZeroQuality(){
-
-        assertEquals(0, app.items[2].quality);
+    void test_Sulfuras_Quality_SellInZero(){
+        createItemWithSellInAndQuality("Sulfuras, Hand of Ragnaros",0, 80);
+        app.updateQuality();
+        assertEquals(80, app.items[0].quality);
     }
 
     @Test
-    void testNormalItemNegativeSellInPozQuality(){
-
-        assertEquals(38, app.items[3].quality);
+    void test_Sulfuras_Quality_NegSellIn(){
+        createItemWithSellInAndQuality("Sulfuras, Hand of Ragnaros", -1, 80);
+        app.updateQuality();
+        assertEquals(80, app.items[0].quality);
     }
 
     @Test
-    void testNormalItemZeroSellInPozQuality(){
-
-        assertEquals(18, app.items[4].quality);
+    void test_Sulfuras_Quality_PozSellIn() {
+        createItemWithSellInAndQuality("Sulfuras, Hand of Ragnaros", 1, 80);
+        app.updateQuality();
+        assertEquals(80, app.items[0].quality);
     }
 
     @Test
-    void testNormalItemZeroSellInZeroQuality() {
-
-        assertEquals(0, app.items[5].quality);
+    void test_Sulfuras_SellInDecrease(){
+        createItemWithSellInAndQuality("Sulfuras, Hand of Ragnaros", 5, 80);
+        app.updateQuality();
+        assertEquals(5, app.items[0].sellIn);
     }
 
     @Test
-    void testSulfurasSellInZero(){
-
-        assertEquals(80, app.items[6].quality);
+    void test_BackstagePass_QualityIncrease_SellInGreaterThenTen() {
+        createItemWithSellInAndQuality("Backstage passes to a TAFKAL80ETC concert", 20, 40);
+        app.updateQuality();
+        assertEquals(41, app.items[0].quality);
     }
 
     @Test
-    void testSulfurasNegSellIn(){
-
-        assertEquals(80, app.items[7].quality);
+    void test_BackstagePass_QualityIncrease_SellInLowerThanTen() {
+        createItemWithSellInAndQuality("Backstage passes to a TAFKAL80ETC concert", 8, 40);
+        app.updateQuality();
+        assertEquals(42, app.items[0].quality);
     }
 
     @Test
-    void testSulfurasPozSellIn() {
-
-        assertEquals(80, app.items[8].quality);
+    void test_BackstagePass_QualityIncrease_SellInLowerThanFive() {
+        createItemWithSellInAndQuality("Backstage passes to a TAFKAL80ETC concert", 3, 40);
+        app.updateQuality();
+        assertEquals(43, app.items[0].quality);
     }
 
     @Test
-    void testBackstagePassGreaterThanTenDays() {
-
-        assertEquals(11, app.items[9].quality);
+    void test_BackstagePass_QualityDecrease_AfterSellIn() {
+        createItemWithSellInAndQuality("Backstage passes to a TAFKAL80ETC concert", -1, 40);
+        app.updateQuality();
+        assertEquals(0,app.items[0].quality);
     }
 
     @Test
-    void testBackstagePassTenDaysOrLower() {
-
-        assertEquals(12, app.items[10].quality);
+    void test_BackstagePass_QualityDecrease_OnSellIn(){
+        createItemWithSellInAndQuality("Backstage passes to a TAFKAL80ETC concert", 0, 40);
+        app.updateQuality();
+        assertEquals(0, app.items[0].quality);
     }
 
     @Test
-    void testBackstagePassFiveDaysOrLower() {
-        assertEquals(13, app.items[11].quality);
+    void test_AgedBrie_QualityIncrease_PosSellIn_PosQuality() {
+        createItemWithSellInAndQuality("Aged Brie", 10, 40);
+        app.updateQuality();
+        assertEquals(41, app.items[0].quality);
     }
 
     @Test
-    void testBackstagePassAfterSellIn() {
-        assertEquals(0,app.items[12].quality);
+    void test_AgedBrie_QualityIncrease_PosSellIn_ZeroQuality(){
+        createItemWithSellInAndQuality("Aged Brie", 10, 0);
+        app.updateQuality();
+        assertEquals(1, app.items[0].quality);
     }
 
     @Test
-    void testBackstagePassOnSellIn(){
-        assertEquals(0, app.items[13].quality);
+    void test_AgedBrie_QualityIncrease_ZeroSellIn_PosQuality(){
+        createItemWithSellInAndQuality("Aged Brie", 0, 20);
+        app.updateQuality();
+        assertEquals(22, app.items[0].quality);
     }
 
     @Test
-    void testBackStagePassZeroSellInZeroQuality(){
-        assertEquals(0, app.items[14].quality);
+    void test_AgedBrie_QualityIncrease_ZeroSellIn_ZeroQuality(){
+        createItemWithSellInAndQuality("Aged Brie", 0, 0);
+        app.updateQuality();
+        assertEquals(2, app.items[0].quality);
     }
 
     @Test
-    void testBackStagePassNegSellInZeroQuality(){
-        assertEquals(0, app.items[15].quality);
+    void test_AgedBrie_QualityIncrease_NegSellIn_ZeroQuality(){
+        createItemWithSellInAndQuality("Aged Brie", -1, 0);
+        app.updateQuality();
+        assertEquals(2, app.items[0].quality);
     }
 
     @Test
-    void testAgedBriePosSellInPosQuality() {
-        assertEquals(16, app.items[16].quality);
+    void test_AgedBrie_QualityIncrease_NegSellIn_PosQuality(){
+        createItemWithSellInAndQuality("Aged Brie", -1, 20);
+        app.updateQuality();
+        assertEquals(22, app.items[0].quality);
     }
 
     @Test
-    void testAgedBriePosSellInZeroQuality(){
-        assertEquals(1, app.items[17].quality);
+    void test_ConjuredItem_QualityDecrease_PosSellIn_PosQuality(){
+        createItemWithSellInAndQuality("Conjured Item", 10, 20);
+        app.updateQuality();
+        assertEquals(18, app.items[0].quality);
     }
 
     @Test
-    void testAgedBrieZeroSellInPosQuality(){
-        assertEquals(17, app.items[18].quality);
+    void test_ConjuredItem_QualityDecrease_ZeroSellIn_PosQuality(){
+        createItemWithSellInAndQuality("Conjured Item", 0, 20);
+        app.updateQuality();
+        assertEquals(16, app.items[0].quality);
     }
 
     @Test
-    void testAgedBrieZeroSellInZeroQuality(){
-        assertEquals(2, app.items[19].quality);
+    void test_ConjuredItem_QualityDecrease_NegSellIn_PosQuality(){
+        createItemWithSellInAndQuality("Conjured Item", -5, 20);
+        app.updateQuality();
+        assertEquals(16, app.items[0].quality);
     }
 
     @Test
-    void testAgedBrieNegSellInZeroQuality(){
-        assertEquals(2, app.items[20].quality);
+    void test_Quality_IsNever_Under_Zero(){
+        createItemWithSellInAndQuality("Normal Item", 10, 0);
+        app.updateQuality();
+
+        assertEquals(0, app.items[0].quality);
     }
 
     @Test
-    void testAgedBrieNegSellInPosQuality(){
-        assertEquals(12, app.items[21].quality);
+    void test_Quality_IsNever_Over50(){
+        createItemWithSellInAndQuality("Aged Brie", 5, 50);
+        app.updateQuality();
+        assertEquals(50, app.items[0].quality);
     }
 
     @Test
-    void testAgedBrieMaxQuality(){
-        assertEquals(50, app.items[22].quality);
+    void test_Decrease_SellIn(){
+       createItemWithSellInAndQuality("Normal Item", 5, 10);
+       app.updateQuality();assertEquals(4, app.items[0].sellIn);
     }
 
-    @Test
-    void testBackStagePassMaxQualityOverTenDays(){
-        assertEquals(50, app.items[23].quality);
+    public void createItemWithSellInAndQuality(String name, int sellIn, int quality){
+        items = new Item[]{new Item(name, sellIn, quality) };
+        app = new GildedRose(items);
     }
 
-    @Test
-    void testBackStagePassMaxQualityOverFiveDays(){
-        assertEquals(50, app.items[24].quality);
-    }
 
-    @Test
-    void testBackStagePassMaxQualityOverZeroDays(){
-        assertEquals(50, app.items[25].quality);
-    }
-
-    @Test
-    void testConjuredItemPosSellInPosQuality(){
-        assertEquals(48, app.items[26].quality);
-    }
-
-    @Test
-    void testConjuredItemZeroSellInPosQuality(){
-        assertEquals(26, app.items[27].quality);
-    }
-
-    @Test
-    void testConjuredItemNegSellInPosQuality(){
-        assertEquals(6, app.items[28].quality);
-    }
-
-    @Test
-    void testConjuredItemsPozSellInZeroQuality(){
-        assertEquals(0, app.items[29].quality);
-    }
-
-    @Test
-    void testConjuredItemsZeroSellInZeroQuality(){
-        assertEquals(0, app.items[30].quality);
-    }
-
-    @Test
-    void testConjuredItemsNegSellInZeroQuality(){
-        assertEquals(0, app.items[31].quality);
-    }
-
-    @Test
-    void testEndDay(){
-        assertEquals(4, app.items[0].sellIn);
-        assertEquals(3, app.items[1].sellIn);
-        assertEquals(-2, app.items[3].sellIn);
-        assertEquals(-1, app.items[4].sellIn);
-        assertEquals(-1, app.items[5].sellIn);
-        assertEquals(0, app.items[6].sellIn);
-        assertEquals(-1, app.items[7].sellIn);
-        assertEquals(1, app.items[8].sellIn);
-        assertEquals(19, app.items[9].sellIn);
-        assertEquals(9, app.items[10].sellIn);
-        assertEquals(4, app.items[11].sellIn);
-        assertEquals(-5, app.items[12].sellIn);
-        assertEquals(-1, app.items[13].sellIn);
-        assertEquals(-1, app.items[14].sellIn);
-        assertEquals(-6, app.items[15].sellIn);
-        assertEquals(9, app.items[16].sellIn);
-        assertEquals(9, app.items[17].sellIn);
-        assertEquals(-1, app.items[18].sellIn);
-        assertEquals(-1, app.items[19].sellIn);
-        assertEquals(-6, app.items[20].sellIn);
-        assertEquals(-6, app.items[21].sellIn);
-
-    }
 }
