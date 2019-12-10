@@ -16,74 +16,87 @@ class GildedRose {
     public void computeNewItemValueAndSellIn(Item item){
         switch (item.name){
             case ("Aged Brie"):
-                increaseAgedBrieQuality(item);
+                computeAgedBrieNewQuality(item);
                 break;
             case("Backstage passes to a TAFKAL80ETC concert"):
-                increaseBackstagePassQuality(item);
+                computeBackstagePassNewQuality(item);
                 break;
             case("Conjured Item"):
-                decreaseConjuredItemQuality(item);
+                computeConjuredItemNewQuality(item);
                 break;
             case("Sulfuras, Hand of Ragnaros"):
                 break;
             default:
-                decreaseNormalItemQuality(item);
-
+                computeNormalItemQuality(item);
         }
-        advanceSellIn(item);
+        decreaseItemSellIn(item);
+    }
+
+    public void computeAgedBrieNewQuality(Item item){
+        if(isUnderMaxQuality(item)) {
+            increaseAgedBrieQuality(item);
+        }
+    }
+
+    public void computeBackstagePassNewQuality(Item item){
+        if(isUnderMaxQuality(item)) {
+            increaseBackstagePassQuality(item);
+        }
+    }
+
+    public void computeConjuredItemNewQuality(Item item){
+        if(isOverMinQuality(item)){
+            increaseConjuredItemQuality(item);
+        }
+    }
+
+    public void computeNormalItemQuality(Item item){
+        if(isOverMinQuality(item)) {
+            decreaseNormalItemQuality(item);
+        }
+    }
+
+    private void increaseAgedBrieQuality(Item item) {
+        if(!isOverSellInDate(item)){
+            item.quality += 2;
+        }
+        else {
+            item.quality += 1;
+        }
+    }
+
+    private void increaseBackstagePassQuality(Item item) {
+        if(item.sellIn > 10 ) {
+            item.quality += 1;
+        }
+        else if(item.sellIn > 5 ) {
+            item.quality += 2;
+        }
+        else if(item.sellIn > 0) {
+            item.quality += 3;
+        }
+        else {
+            item.quality = 0;
+        }
+    }
+
+    private void increaseConjuredItemQuality(Item item) {
+        if(isOverSellInDate(item)) {
+            item.quality -= 2;
+        }
+        else {
+            item.quality -= 4;
+        }
     }
 
     public void decreaseNormalItemQuality(Item item){
-        if(item.quality > 0) {
-            if(item.sellIn > 0) {
-                item.quality = item.quality - 1;
-            }
-            else {
-                item.quality = item.quality - 2;
-            }
+        if(isOverSellInDate(item)){
+            item.quality -= 1;
         }
+        else item.quality -= 2;
     }
 
-    public void decreaseConjuredItemQuality(Item item){
-        if(item.quality > 0){
-            if(item.sellIn > 0) {
-                item.quality = item.quality - 2;
-            }
-            else {
-                item.quality = item.quality - 4;
-            }
-        }
-    }
-
-    public void increaseAgedBrieQuality(Item item){
-        if(item.quality < 50) {
-            if(item.sellIn <= 0){
-                item.quality = item.quality + 2;
-            }
-            else {
-                item.quality = item.quality + 1;
-            }
-        }
-    }
-
-    public void increaseBackstagePassQuality(Item item){
-        if(item.quality < 50) {
-            if(item.sellIn > 10 ) {
-                item.quality = item.quality + 1;
-            }
-            else if(item.sellIn > 5 ) {
-                item.quality = item.quality + 2;
-            }
-            else if(item.sellIn > 0) {
-                item.quality = item.quality + 3;
-            }
-            else {
-                item.quality = 0;
-            }
-        }
-    }
-
-    public void advanceSellIn(Item item){
+    public void decreaseItemSellIn(Item item){
         if(!isSulfuras(item)) {
             item.sellIn -= 1;
         }
@@ -92,5 +105,15 @@ class GildedRose {
     public boolean isSulfuras(Item item){
         return item.name.equals("Sulfuras, Hand of Ragnaros");
     }
+
+    public boolean isUnderMaxQuality(Item item){
+        return item.quality < 50;
+    }
+
+    public boolean isOverMinQuality(Item item){
+        return item.quality > 0;
+    }
+
+    public boolean isOverSellInDate(Item item) { return item.sellIn > 0;}
 
 }
