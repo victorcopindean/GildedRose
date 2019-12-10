@@ -27,7 +27,7 @@ class GildedRose {
             case("Sulfuras, Hand of Ragnaros"):
                 break;
             default:
-                computeNormalItemQuality(item);
+                computeNormalItemNewQuality(item);
         }
         decreaseItemSellIn(item);
     }
@@ -50,7 +50,7 @@ class GildedRose {
         }
     }
 
-    public void computeNormalItemQuality(Item item){
+    public void computeNormalItemNewQuality(Item item){
         if(isOverMinQuality(item)) {
             decreaseNormalItemQuality(item);
         }
