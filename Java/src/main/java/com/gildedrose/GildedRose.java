@@ -13,7 +13,7 @@ class GildedRose {
         }
     }
 
-    public void computeNewItemValueAndSellIn(Item item){
+    private void computeNewItemValueAndSellIn(Item item){
         switch (item.name){
             case ("Aged Brie"):
                 computeAgedBrieNewQuality(item);
@@ -32,25 +32,25 @@ class GildedRose {
         decreaseItemSellIn(item);
     }
 
-    public void computeAgedBrieNewQuality(Item item){
+    private void computeAgedBrieNewQuality(Item item){
         if(isUnderMaxQuality(item)) {
             increaseAgedBrieQuality(item);
         }
     }
 
-    public void computeBackstagePassNewQuality(Item item){
+    private void computeBackstagePassNewQuality(Item item){
         if(isUnderMaxQuality(item)) {
             increaseBackstagePassQuality(item);
         }
     }
 
-    public void computeConjuredItemNewQuality(Item item){
+    private void computeConjuredItemNewQuality(Item item){
         if(isOverMinQuality(item)){
             increaseConjuredItemQuality(item);
         }
     }
 
-    public void computeNormalItemNewQuality(Item item){
+    private void computeNormalItemNewQuality(Item item){
         if(isOverMinQuality(item)) {
             decreaseNormalItemQuality(item);
         }
@@ -89,31 +89,30 @@ class GildedRose {
         }
     }
 
-    public void decreaseNormalItemQuality(Item item){
+    private void decreaseNormalItemQuality(Item item){
         if(isOverSellInDate(item)){
             item.quality -= 1;
         }
         else item.quality -= 2;
     }
 
-    public void decreaseItemSellIn(Item item){
+    private void decreaseItemSellIn(Item item){
         if(!isSulfuras(item)) {
             item.sellIn -= 1;
         }
     }
 
-    public boolean isSulfuras(Item item){
+    private boolean isSulfuras(Item item){
         return item.name.equals("Sulfuras, Hand of Ragnaros");
     }
 
-    public boolean isUnderMaxQuality(Item item){
+    private boolean isUnderMaxQuality(Item item){
         return item.quality < 50;
     }
 
-    public boolean isOverMinQuality(Item item){
+    private boolean isOverMinQuality(Item item){
         return item.quality > 0;
     }
 
-    public boolean isOverSellInDate(Item item) { return item.sellIn > 0;}
-
+    private boolean isOverSellInDate(Item item) { return item.sellIn > 0;}
 }
